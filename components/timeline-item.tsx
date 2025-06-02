@@ -32,7 +32,7 @@ export function TimelineItem({ post, index }: PostCardProps) {
           {/* Contenido */}
           <div className="p-5 space-y-3">
             {/* Título */}
-            <h3 className="text-lg font-bold text-zinc-900 dark:text-white line-clamp-2 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-300">
+            <h3 className="text-lg font-bold text-zinc-900 dark:text-white line-clamp-2 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors duration-300">
               {post.title}
             </h3>
 
@@ -45,7 +45,7 @@ export function TimelineItem({ post, index }: PostCardProps) {
                 {post.tags.slice(0, 2).map((tag) => (
                   <span
                     key={tag}
-                    className="px-2 py-1 text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full"
+                    className="px-2 py-1 text-xs font-medium bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-full"
                   >
                     {tag}
                   </span>
@@ -64,7 +64,7 @@ export function TimelineItem({ post, index }: PostCardProps) {
               href={post.behanceUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium rounded-lg transition-colors duration-300 group"
+              className="inline-flex items-center gap-2 px-3 py-2 bg-zinc-700 hover:bg-zinc-600 text-white text-xs font-medium rounded-full transition-colors duration-300 group"
             >
               Ver en Behance
               <ExternalLink className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1" />
@@ -73,14 +73,14 @@ export function TimelineItem({ post, index }: PostCardProps) {
         </div>
 
         {/* Línea conectora hacia el círculo */}
-        <div className={`w-px h-8 bg-purple-300 dark:bg-purple-600 mx-auto ${isEven ? "" : "order-1"}`} />
+        <div className={`w-px h-8 bg-emerald-300 dark:bg-emerald-600 mx-auto ${isEven ? "" : "order-1"}`} />
       </div>
 
       {/* Círculo en la línea de tiempo con número */}
       <div className={`relative z-20 ${isEven ? "order-1" : "order-2"}`}>
-        <div className="w-8 h-8 bg-purple-600 rounded-full border-4 border-white dark:border-zinc-800 shadow-lg hover:scale-125 transition-transform duration-300 cursor-pointer flex items-center justify-center">
+        <div className="w-8 h-8 bg-emerald-600 rounded-full border-4 border-white dark:border-zinc-800 shadow-lg hover:scale-125 transition-transform duration-300 cursor-pointer flex items-center justify-center">
           <span className="text-white text-sm font-bold">{post.pieceNumber}</span>
-          <div className="absolute inset-0 bg-purple-400 rounded-full animate-ping opacity-20" />
+          <div className="absolute inset-0 bg-emerald-400 rounded-full animate-ping opacity-20" />
         </div>
 
         {/* Fecha pequeña debajo del círculo */}

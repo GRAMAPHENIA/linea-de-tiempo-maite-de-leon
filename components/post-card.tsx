@@ -9,7 +9,7 @@ import { formatDate, getTimeAgo } from "@/utils/dateFormatter"
 export function PostCard({ post, index }: PostCardProps) {
   return (
     <article className="flex-none w-80 md:w-96 snap-center group">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 dark:border-gray-700 hover:border-purple-200 dark:hover:border-purple-600">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 dark:border-gray-700 hover:border-teal-200 dark:hover:border-teal-600">
         {/* Imagen principal */}
         <div className="relative h-48 md:h-56 overflow-hidden">
           <Image
@@ -25,7 +25,7 @@ export function PostCard({ post, index }: PostCardProps) {
         {/* Contenido */}
         <div className="p-6 space-y-4">
           {/* Título */}
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
             {post.title}
           </h3>
 
@@ -38,7 +38,7 @@ export function PostCard({ post, index }: PostCardProps) {
               {post.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className="px-2 py-1 text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full"
+                  className="px-2 py-1 text-xs font-medium bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 rounded-full"
                 >
                   {tag}
                 </span>
@@ -58,7 +58,7 @@ export function PostCard({ post, index }: PostCardProps) {
             href={post.behanceUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors duration-300 group/link"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-lg transition-colors duration-300 group/link"
           >
             Ver en Behance
             <ExternalLink className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1" />

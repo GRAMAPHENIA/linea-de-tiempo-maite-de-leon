@@ -11,15 +11,6 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="space-y-2">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
-                <Palette className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent font-poppins">
-                  Mi Portfolio
-                </h1>
-                <p className="text-zinc-600 dark:text-zinc-300 text-lg">Línea de tiempo creativa</p>
-              </div>
             </div>
           </div>
           <ThemeToggle />
@@ -29,7 +20,7 @@ export default function HomePage() {
       {/* Línea de tiempo */}
       <main className="px-6 pb-12">
         <div className="max-w-full mx-auto">
-          <div className="mb-12 text-center">
+          {/* <div className="mb-12 text-center">
             <div className="flex items-center justify-center gap-2 mb-4">
               <TrendingUp className="w-6 h-6 text-purple-600" />
               <h2 className="text-2xl md:text-3xl font-semibold text-zinc-800 dark:text-white font-poppins">
@@ -40,20 +31,20 @@ export default function HomePage() {
               Explora mi trayectoria profesional a través de esta línea de tiempo interactiva. Cada punto representa un
               hito importante en mi desarrollo como diseñador.
             </p>
-          </div>
+          </div> */}
 
           <TimelineContainer posts={behancePosts} />
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="px-6 py-8 border-t border-zinc-300 dark:border-zinc-700 mt-16">
+      {/* <footer className="px-6 py-8 border-t border-zinc-300 dark:border-zinc-700 mt-16">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-zinc-500 dark:text-zinc-400 text-sm">
             © 2024 Mi Portfolio. Diseñado con pasión y dedicación.
           </p>
         </div>
-      </footer>
+      </footer> */}
     </div>
   )
 }
