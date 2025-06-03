@@ -1,9 +1,10 @@
 "use client";
 
 import { useRef, useEffect, useState, useCallback } from "react";
-import { ChevronLeft, ChevronRight, Calendar, Hash } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { TimelineItem } from "./timeline-item";
-import { ProgressIndicator } from "./progress-indicator";
+import { EmptyTimelineItem } from "./empty-timeline-item";
+import { Header } from "./header";
 import type { TimelineProps } from "@/types";
 
 /**
@@ -115,64 +116,84 @@ export function TimelineContainer({ posts }: TimelineProps) {
   }, []);
 
   return (
-    <section className="relative w-full overflow-hidden">
+    <>
+      <Header
+        currentIndex={currentIndex}
+        totalItems={posts.length}
+        onPrev={scrollLeft}
+        onNext={scrollRight}
+        onDotClick={scrollToIndex}
+        canScrollLeft={canScrollLeft}
+        canScrollRight={canScrollRight}
+        startYear={posts[0]?.publishedDate.getFullYear()}
+        endYear={posts[posts.length - 1]?.publishedDate.getFullYear()}
+      />
+      
+      <section className="relative w-full overflow-hidden pt-4">
+        {/* Botones de navegación */}
+        {canScrollLeft && (
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 z-30">
+            <button
+              onClick={scrollLeft}
+              className="w-12 h-12 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl border border-zinc-200 dark:border-zinc-600 flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+              aria-label="Scroll hacia la izquierda"
+            >
+              <ChevronLeft className="w-6 h-6 text-zinc-600 dark:text-zinc-300 group-hover:text-teal-600 dark:group-hover:text-teal-400" />
+            </button>
+          </div>
+        )}
 
-
-      {/* Botones de navegación */}
-      {canScrollLeft && (
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 z-30">
-          <button
-            onClick={scrollLeft}
-            className="w-12 h-12 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl border border-zinc-200 dark:border-zinc-600 flex items-center justify-center transition-all duration-300 hover:scale-110 group"
-            aria-label="Scroll hacia la izquierda"
-          >
-            <ChevronLeft className="w-6 h-6 text-zinc-600 dark:text-zinc-300 group-hover:text-teal-600 dark:group-hover:text-teal-400" />
-          </button>
-        </div>
-      )}
-
-      {canScrollRight && (
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 z-30">
-          <button
-            onClick={scrollRight}
-            className="w-12 h-12 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl border border-zinc-200 dark:border-zinc-600 flex items-center justify-center transition-all duration-300 hover:scale-110 group"
-            aria-label="Scroll hacia la derecha"
-          >
-            <ChevronRight className="w-6 h-6 text-zinc-600 dark:text-zinc-300 group-hover:text-teal-600 dark:group-hover:text-teal-400" />
-          </button>
-        </div>
-      )}
+        {canScrollRight && (
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 z-30">
+            <button
+              onClick={scrollRight}
+              className="w-12 h-12 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl border border-zinc-200 dark:border-zinc-600 flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+              aria-label="Scroll hacia la derecha"
+            >
+              <ChevronRight className="w-6 h-6 text-zinc-600 dark:text-zinc-300 group-hover:text-teal-600 dark:group-hover:text-teal-400" />
+            </button>
+          </div>
+        )}
 
       {/* Contenedor principal con scroll horizontal */}
       <div className="relative">
         {/* Contenedor de scroll */}
         <div
           ref={scrollContainerRef}
-          className="flex items-center overflow-x-auto scrollbar-hide py-16 relative"
+          className="flex items-center overflow-x-auto scrollbar-hide pt-16 relative z-10"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
           }}
         >
-          {/* Espaciado inicial */}
-          <div className="flex-shrink-0 w-8" />
+          {/* Tarjeta vacía de inicio */}
+          <div className="flex items-center pl-8">
+            <EmptyTimelineItem />
+          </div>
 
-          {/* Elementos de la línea de tiempo con líneas segmentadas */}
+          {/* Elementos de la línea de tiempo con círculos delante de cada tarjeta */}
           {posts.map((post, index) => (
             <div key={post.id} className="relative flex items-center">
-              <TimelineItem post={post} index={index} />
-
-              {/* Línea segmentada hacia el siguiente punto */}
-              {index < posts.length - 1 && (
-                <div className="absolute top-1/2 left-full w-16 h-1 bg-gradient-to-r from-blue-400 to-indigo-600 dark:from-blue-600 dark:to-indigo-600 transform -translate-y-1/2 z-10" />
-              )}
+              {/* Círculo con número */}
+              <div className="relative z-20">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-zinc-800 shadow-lg bg-gradient-to-r from-blue-400 to-indigo-600 dark:from-blue-600 dark:to-indigo-600">
+                  <span className="text-white text-sm font-bold">{index + 1}</span>
+                  <div className="absolute inset-0 bg-blue-400 rounded-full animate-pulse opacity-30" />
+                </div>
+              </div>
+              
+              {/* Tarjeta */}
+              <div className="ml-4">
+                <TimelineItem post={post} index={index} />
+              </div>
             </div>
           ))}
 
           {/* Punto final de la línea de tiempo */}
           <div className="flex-shrink-0 flex flex-col items-center px-8">
-            <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-indigo-600 dark:from-blue-600 dark:to-indigo-600 rounded-full border-4 border-white dark:border-zinc-800 shadow-lg relative z-20">
-              <div className="absolute inset-0 bg-blue-400 rounded-full animate-pulse opacity-30" />
+            <div className="w-12 h-12 bg-gradient-to-r from-amber-300 to-orange-500 rounded-full border-4 border-white dark:border-zinc-800 shadow-lg relative z-20 flex items-center justify-center">
+              <span className="text-white text-sm font-bold">{posts.length}</span>
+              <div className="absolute inset-0 bg-amber-400 rounded-full animate-pulse opacity-30" />
             </div>
             <div className="mt-4 text-center">
               <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
@@ -189,18 +210,7 @@ export function TimelineContainer({ posts }: TimelineProps) {
         </div>
       </div>
 
-      {/* Indicador de progreso mejorado */}
-      <ProgressIndicator 
-        currentIndex={currentIndex}
-        totalItems={posts.length}
-        onPrev={scrollLeft}
-        onNext={scrollRight}
-        onDotClick={scrollToIndex}
-        canScrollLeft={canScrollLeft}
-        canScrollRight={canScrollRight}
-        startYear={posts[0]?.publishedDate.getFullYear()}
-        endYear={posts[posts.length - 1]?.publishedDate.getFullYear()}
-      />
-    </section>
+      </section>
+    </>
   );
 }
