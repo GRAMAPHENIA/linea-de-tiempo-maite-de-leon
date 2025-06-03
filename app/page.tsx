@@ -1,5 +1,5 @@
 import { TimelineContainer } from "@/components/timeline-container"
-import { ThemeToggle } from "@/components/ui/theme-toggle"
+
 import { behancePosts } from "@/data/behancePosts"
 import { Palette, TrendingUp } from "lucide-react"
 
@@ -7,15 +7,15 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-zinc-200 dark:bg-zinc-900 transition-colors duration-500 overflow-x-hidden">
       {/* Header */}
-      <header className="relative px-6 py-8">
+      {/* <header className="relative px-6 py-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="space-y-2">
             <div className="flex items-center gap-3">
             </div>
           </div>
-          <ThemeToggle />
+          
         </div>
-      </header>
+      </header> */}
 
       {/* Línea de tiempo */}
       <main className="px-6 pb-12">

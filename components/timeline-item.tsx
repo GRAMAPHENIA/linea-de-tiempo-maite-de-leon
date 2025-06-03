@@ -15,7 +15,7 @@ export function TimelineItem({ post, index }: PostCardProps) {
       {/* Contenido arriba o abajo según el índice */}
       <div className={`w-80 ${isEven ? "mb-8" : "mt-8 order-2"}`}>
         <div
-          className={`bg-white dark:bg-zinc-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-zinc-200 dark:border-zinc-700 hover:border-purple-200 dark:hover:border-purple-600 ${isEven ? "" : "transform"}`}
+          className={`bg-white dark:bg-zinc-800 rounded-2xl shadow-none hover:shadow-2xl transition-all duration-500 overflow-hidden border border-zinc-200 dark:border-zinc-700 hover:border-purple-200 dark:hover:border-purple-600 ${isEven ? "" : "transform"}`}
         >
           {/* Imagen principal */}
           <div className="relative h-40 overflow-hidden">
