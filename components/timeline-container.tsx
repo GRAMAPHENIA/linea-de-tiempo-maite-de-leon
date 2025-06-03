@@ -40,32 +40,32 @@ export function TimelineContainer({ posts }: TimelineProps) {
   const itemWidth = 400; // Ancho aproximado de cada elemento
 
   // Navegar a un índice específico
-  const scrollToIndex = useCallback((index: number) => {
-    if (scrollContainerRef.current) {
-      const container = scrollContainerRef.current;
-      const containerWidth = container.clientWidth;
-      const scrollWidth = container.scrollWidth;
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      if (scrollContainerRef.current) {
+        const container = scrollContainerRef.current;
+        const containerWidth = container.clientWidth;
+        const scrollWidth = container.scrollWidth;
 
-      // Calcular la posición objetivo para centrar el elemento
-      const targetPosition = index * itemWidth;
-      const maxScroll = scrollWidth - containerWidth;
+        // Calcular la posición objetivo para centrar el elemento
+        const targetPosition = index * itemWidth;
+        const maxScroll = scrollWidth - containerWidth;
 
-      // Asegurarse de no hacer scroll más allá del contenido
-      const scrollPosition = Math.min(
-        Math.max(
-          0,
-          targetPosition - containerWidth / 2 + itemWidth / 2
-        ),
-        maxScroll
-      );
+        // Asegurarse de no hacer scroll más allá del contenido
+        const scrollPosition = Math.min(
+          Math.max(0, targetPosition - containerWidth / 2 + itemWidth / 2),
+          maxScroll
+        );
 
-      container.scrollTo({
-        left: scrollPosition,
-        behavior: "smooth",
-      });
-      setCurrentIndex(index);
-    }
-  }, [itemWidth]);
+        container.scrollTo({
+          left: scrollPosition,
+          behavior: "smooth",
+        });
+        setCurrentIndex(index);
+      }
+    },
+    [itemWidth]
+  );
 
   // Verificar estado de scroll
   const checkScrollButtons = useCallback(() => {
@@ -128,7 +128,7 @@ export function TimelineContainer({ posts }: TimelineProps) {
         startYear={posts[0]?.publishedDate.getFullYear()}
         endYear={posts[posts.length - 1]?.publishedDate.getFullYear()}
       />
-      
+
       <section className="relative w-full overflow-hidden pt-4">
         {/* Botones de navegación */}
         {canScrollLeft && (
@@ -155,61 +155,64 @@ export function TimelineContainer({ posts }: TimelineProps) {
           </div>
         )}
 
-      {/* Contenedor principal con scroll horizontal */}
-      <div className="relative">
-        {/* Contenedor de scroll */}
-        <div
-          ref={scrollContainerRef}
-          className="flex items-center overflow-x-auto scrollbar-hide pt-16 relative z-10"
-          style={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-          }}
-        >
-          {/* Tarjeta vacía de inicio */}
-          <div className="flex items-center pl-8">
-            <EmptyTimelineItem />
-          </div>
+        {/* Contenedor principal con scroll horizontal */}
+        <div className="relative">
+          {/* Contenedor de scroll */}
+          <div
+            ref={scrollContainerRef}
+            className="flex items-center overflow-x-auto scrollbar-hide pt-16 relative z-10"
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+            }}
+          >
+            {/* Tarjeta vacía de inicio */}
+            <div className="flex items-center pl-8">
+              <EmptyTimelineItem />
+            </div>
 
-          {/* Elementos de la línea de tiempo con círculos delante de cada tarjeta */}
-          {posts.map((post, index) => (
-            <div key={post.id} className="relative flex items-center">
-              {/* Círculo con número */}
-              <div className="relative z-20">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-zinc-800 shadow-lg bg-gradient-to-r from-blue-400 to-indigo-600 dark:from-blue-600 dark:to-indigo-600">
-                  <span className="text-white text-sm font-bold">{index + 1}</span>
-                  <div className="absolute inset-0 bg-blue-400 rounded-full animate-pulse opacity-30" />
+            {/* Elementos de la línea de tiempo con círculos delante de cada tarjeta */}
+            {posts.map((post, index) => (
+              <div key={post.id} className="relative flex items-center">
+                {/* Círculo con número */}
+                <div className="relative z-20">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-zinc-800 shadow-lg bg-gradient-to-r from-blue-400 to-indigo-600 dark:from-blue-600 dark:to-indigo-600">
+                    <span className="text-white text-sm font-bold">
+                      {index + 1}
+                    </span>
+                    <div className="absolute inset-0 bg-blue-400 rounded-full animate-pulse opacity-30" />
+                  </div>
+                </div>
+
+                {/* Tarjeta */}
+                <div className="ml-4">
+                  <TimelineItem post={post} index={index} />
                 </div>
               </div>
-              
-              {/* Tarjeta */}
-              <div className="ml-4">
-                <TimelineItem post={post} index={index} />
+            ))}
+
+            {/* Punto final de la línea de tiempo */}
+            <div className="flex-shrink-0 flex flex-col items-center px-8">
+              <div className="w-12 h-12 bg-gradient-to-r from-amber-300 to-orange-500 rounded-full border-4 border-white dark:border-zinc-800 shadow-lg relative z-20 flex items-center justify-center">
+                <span className="text-white text-sm font-bold">
+                  {posts.length}
+                </span>
+                <div className="absolute inset-0 bg-amber-400 rounded-full animate-pulse opacity-30" />
+              </div>
+              <div className="mt-4 text-center">
+                <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                  Más proyectos
+                </p>
+                <p className="text-xs text-zinc-500 dark:text-zinc-500">
+                  próximamente...
+                </p>
               </div>
             </div>
-          ))}
 
-          {/* Punto final de la línea de tiempo */}
-          <div className="flex-shrink-0 flex flex-col items-center px-8">
-            <div className="w-12 h-12 bg-gradient-to-r from-amber-300 to-orange-500 rounded-full border-4 border-white dark:border-zinc-800 shadow-lg relative z-20 flex items-center justify-center">
-              <span className="text-white text-sm font-bold">{posts.length}</span>
-              <div className="absolute inset-0 bg-amber-400 rounded-full animate-pulse opacity-30" />
-            </div>
-            <div className="mt-4 text-center">
-              <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                Más proyectos
-              </p>
-              <p className="text-xs text-zinc-500 dark:text-zinc-500">
-                próximamente...
-              </p>
-            </div>
+            {/* Espaciado final */}
+            <div className="flex-shrink-0 w-8" />
           </div>
-
-          {/* Espaciado final */}
-          <div className="flex-shrink-0 w-8" />
         </div>
-      </div>
-
       </section>
     </>
   );
